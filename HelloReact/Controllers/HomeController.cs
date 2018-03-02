@@ -19,5 +19,10 @@ namespace HelloReact.Controllers
             ViewData["RequestId"] = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
             return View();
         }
+
+        public IActionResult Test()
+        {
+            return View();
+        }
     }
 }
