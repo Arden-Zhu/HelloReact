@@ -11,7 +11,7 @@
     "skipDefaultLibCheck": true,
     "strict": true,
     "lib": [ "es6", "dom" ],
-    "types": [ "webpack-env" ]
+    "types": [ "webpack-env", "jasmine" ]
   },
   "exclude": [
     "bin",
