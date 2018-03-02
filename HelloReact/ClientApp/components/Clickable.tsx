@@ -6,50 +6,47 @@ export class ClickableItem {
     id: number;
 }
 
-export class ClickItemView
-    extends React.Component<ClickableItem, {}> {
-    constructor() {
-        super();
-        this.handleClick =
-            this.handleClick.bind(this); 
-    }
-    render() {
-        return (
-            <li><button onClick={this.handleClick}> {this.props.displayName}</button></li>
-        );
-    }
-
-    handleClick() {
-        alert(`handleClick() { id : ${this.props.id} 
-        displayName : ${this.props.displayName} }`);
-    } 
-}
-
 export interface IArrayViewProps {
     items: ClickableItem[],
-    title: string
+    title: string,
+    selectedItem?: ClickableItem
 };
 
 export class ArrayView extends
     React.Component<IArrayViewProps, {}> {
+    selectedItem: ClickableItem;
+    constructor() {
+        super();
+        this.selectedItem = { id: 0, displayName: 'none' };
+    }
+
     render() {
-
-        let buttonNodes =
-            this.props.items.map(function (item) {
-                return (
-                    <ClickItemView {...item} />
-                );
-            });
-
-        return <div>
+        var that = this;
+        return (<div>
             <h1>{this.props.title}</h1>
             <ul>
-                {buttonNodes}
+                {this.props.items.map(function (item, i) {
+                    return (
+                        <li key={i} onClick={that.handleClick.bind(that, i, item)}>
+                            <button id={'select_button_' + item.id} >
+                                {item.displayName}</button>
+                        </li>
+                    );
+                }, this)}
             </ul>
+
+            <div id="selectedItem">Selected : {this.selectedItem.id} - {this.selectedItem.displayName}</div>
         </div>
 
-            ;
+        );
     }
+
+    handleClick(i: number, props: any) {
+        //console.log(`handleClick : ${props}`);
+        this.selectedItem = props;
+        this.forceUpdate();
+    }       
+
 } 
 
 export class Clickable extends
