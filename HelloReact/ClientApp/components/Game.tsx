@@ -6,27 +6,6 @@ interface SquareProps {
     onClick: () => void;
 }
 
-//interface SquareStates {
-//    //value: string | null;
-//}
-
-//class Square extends React.Component<SquareProps, SquareStates> {
-//    constructor(props: SquareProps) {
-//        super(props);
-//        //this.state = {
-//        //    value: null,
-//        //}
-//    }
-
-//    render() {
-//        return (
-//            <button className="square" onClick={() => this.props.onClick()} >
-//                {this.props.value}
-//            </button>
-//        );
-//    }
-//}
-
 function Square(props: SquareProps) {
     return (
         <button className="square" onClick={props.onClick}>
@@ -35,52 +14,22 @@ function Square(props: SquareProps) {
     );
 }
 
-
-interface BoardStates {
+interface IBoardProps {
     squares: string[],
-    xIsNext: boolean,
+    onClick: (i: number) => void
 }
 
-class Board extends React.Component<{}, BoardStates> {
-    constructor() {
-        super();
-        this.state = {
-            squares: Array(9).fill(null),
-            xIsNext : true,
-        }
-    }
-
-    handleClick(i: number) {
-        const squares = this.state.squares.slice();
-        if (calculateWinner(squares) || squares[i]) {
-            return;
-        }
-        squares[i] = this.state.xIsNext ? 'X' : 'O';
-        this.setState({
-            squares: squares,
-            xIsNext: !this.state.xIsNext,
-        });
-    }
-
+class Board extends React.Component<IBoardProps, {}> {
     renderSquare(i: number) {
         return <Square
-            onClick = {() => this.handleClick(i)}
-            value={this.state.squares[i]}
+            onClick = {() => this.props.onClick(i)}
+            value={this.props.squares[i]}
         />;
     }
 
     render() {
-        const winner = calculateWinner(this.state.squares);
-        let status: string;
-        if (winner) {
-            status = 'Winner: ' + winner;
-        } else {
-            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-        }
-
         return (
             <div>
-                <div className="status">{status}</div>
                 <div className="board-row">
                     {this.renderSquare(0)}
                     {this.renderSquare(1)}
@@ -101,15 +50,65 @@ class Board extends React.Component<{}, BoardStates> {
     }
 }
 
-export class Game extends React.Component<RouteComponentProps<{}>, {}> {
+interface ISquares {
+    squares: string[];
+}
+
+interface IGameProps {
+    history: ISquares[],
+    xIsNext: boolean,
+}
+
+export class Game extends React.Component<RouteComponentProps<{}>, IGameProps> {
+    constructor(props: RouteComponentProps<{}>) {
+        super(props);
+        this.state = {
+            history: [{
+                squares: Array(9).fill(null),
+            }],
+            xIsNext: true,
+        };
+    }
+
+    handleClick(i: number) {
+        const history = this.state.history;
+        const current = history[history.length - 1];
+        const squares = current.squares.slice();
+
+        if (calculateWinner(squares) || squares[i]) {
+            return;
+        }
+        squares[i] = this.state.xIsNext ? 'X' : 'O';
+        this.setState({
+            history: history.concat([{
+                squares: squares,
+            }]),
+            xIsNext: !this.state.xIsNext,
+        });
+    }
+
     render() {
+        const history = this.state.history;
+        const current = history[history.length - 1];
+        const winner = calculateWinner(current.squares);
+
+        let status;
+        if (winner) {
+            status = 'Winner: ' + winner;
+        } else {
+            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+        }
+
         return (
             <div className="game">
                 <div className="game-board">
-                    <Board />
+                    <Board
+                        squares={current.squares}
+                        onClick={(i) => this.handleClick(i)}
+                    />
                 </div>
                 <div className="game-info">
-                    <div>{/* status */}</div>
+                    <div>{status}</div>
                     <ol>{/* TODO */}</ol>
                 </div>
             </div>
