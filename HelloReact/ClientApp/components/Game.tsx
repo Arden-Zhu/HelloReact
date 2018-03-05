@@ -2,33 +2,54 @@
 import { RouteComponentProps } from 'react-router-dom';
 
 interface SquareProps {
-    value: number;
+    value: string;
+    onClick: () => void;
 }
 
 interface SquareStates {
-    value: string | null;
+    //value: string | null;
 }
 
 class Square extends React.Component<SquareProps, SquareStates> {
     constructor(props: SquareProps) {
         super(props);
-        this.state = {
-            value: null,
-        }
+        //this.state = {
+        //    value: null,
+        //}
     }
 
     render() {
         return (
-            <button className="square" onClick={() => this.setState({ value: 'X' })} >
-                {this.state.value}
+            <button className="square" onClick={() => this.props.onClick()} >
+                {this.props.value}
             </button>
         );
     }
 }
 
-class Board extends React.Component {
+interface BoardStates {
+    squares: string[],
+}
+
+class Board extends React.Component<{}, BoardStates> {
+    constructor() {
+        super();
+        this.state = {
+            squares: Array(9).fill(null),
+        }
+    }
+
+    handleClick(i: number) {
+        const squares = this.state.squares.slice();
+        squares[i] = 'X';
+        this.setState({ squares: squares });
+    }
+
     renderSquare(i: number) {
-        return <Square value={i} />;
+        return <Square
+            onClick = {() => this.handleClick(i)}
+            value={this.state.squares[i]}
+        />;
     }
 
     render() {
