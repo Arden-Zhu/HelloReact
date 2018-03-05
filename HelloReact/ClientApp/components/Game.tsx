@@ -117,7 +117,7 @@ export class Game extends React.Component<RouteComponentProps<{}>, {}> {
     }
 }
 
-function calculateWinner(squares: string[]): string | null {
+function calculateWinner(squares: string[]): string {
     const lines = [
         [0, 1, 2],
         [3, 4, 5],
@@ -134,5 +134,5 @@ function calculateWinner(squares: string[]): string | null {
             return squares[a];
         }
     }
-    return null;
+    return '';
 }
