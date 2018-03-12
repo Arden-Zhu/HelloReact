@@ -25,6 +25,7 @@
     <None Remove="ClientApp\components\Clickable.tsx" />
     <None Remove="ClientApp\components\Game.tsx" />
     <None Remove="ClientApp\components\NameForm.tsx" />
+    <None Remove="ClientApp\store\Game.ts" />
     <None Remove="ClientApp\test\react.app.tests.tsx" />
   </ItemGroup>
 
@@ -32,6 +33,7 @@
     <TypeScriptCompile Include="ClientApp\components\Clickable.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Game.tsx" />
     <TypeScriptCompile Include="ClientApp\components\NameForm.tsx" />
+    <TypeScriptCompile Include="ClientApp\store\Game.ts" />
     <TypeScriptCompile Include="ClientApp\test\react.app.tests.tsx" />
   </ItemGroup>
 
