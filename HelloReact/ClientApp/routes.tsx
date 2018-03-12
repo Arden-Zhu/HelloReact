@@ -5,7 +5,7 @@ import Home from './components/Home';
 import FetchData from './components/FetchData';
 import Counter from './components/Counter';
 import { Clickable } from './components/Clickable';
-import { Game } from './components/Game';
+import Game  from './components/Game';
 
 export const routes = <Layout>
     <Route exact path='/' component={ Home } />

@@ -6,8 +6,8 @@ interface ISquares {
     squares: string[];
 }
 
-interface IGameStates {
-    history: ISquares[],
+export interface IGameStates {
+    history: { squares: string[] }[],
     xIsNext: boolean,
     stepNumber: number,
 }
@@ -57,6 +57,14 @@ function calculateWinner(squares: string[]): string {
     return '';
 }
 
+const unloadedState: IGameStates = {
+    history: [{
+        squares: Array(9).fill(null),
+    }],
+    xIsNext: true,
+    stepNumber: 0,
+};
+
 export const reducer: Reducer<IGameStates> = (state: IGameStates, inComingAction: Action) => {
     const action = inComingAction as KnownAction;
     switch (action.type) {
@@ -90,11 +98,5 @@ export const reducer: Reducer<IGameStates> = (state: IGameStates, inComingAction
 
     // For unrecognized actions (or in cases where actions have no effect), must return the existing state
     //  (or default initial state if none was supplied)
-    return state || {
-        history: [{
-            squares: Array(9).fill(null),
-        }],
-        xIsNext: true,
-        stepNumber: 0,
-    };
+    return state || unloadedState;
 };

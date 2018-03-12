@@ -1,5 +1,9 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { ApplicationState } from '../store';
+import * as GameStore from '../store/Game';
+
 
 interface SquareProps {
     value: string;
@@ -50,56 +54,15 @@ class Board extends React.Component<IBoardProps, {}> {
     }
 }
 
-interface ISquares {
-    squares: string[];
-}
+type GameProps =
+    GameStore.IGameStates
+    & typeof GameStore.actionCreators
+    & RouteComponentProps<{}>;
 
-interface IGameStates {
-    history: ISquares[],
-    xIsNext: boolean,
-    stepNumber: number,
-}
-
-export class Game extends React.Component<RouteComponentProps<{}>, IGameStates> {
-    constructor(props: RouteComponentProps<{}>) {
-        super(props);
-        this.state = {
-            history: [{
-                squares: Array(9).fill(null),
-            }],
-            xIsNext: true,
-            stepNumber: 0,
-        };
-    }
-
-    handleClick(i: number) {
-        const history = this.state.history.slice(0, this.state.stepNumber + 1);
-        const current = history[history.length - 1];
-        const squares = current.squares.slice();
-
-        if (calculateWinner(squares) || squares[i]) {
-            return;
-        }
-        squares[i] = this.state.xIsNext ? 'X' : 'O';
-        this.setState({
-            history: history.concat([{
-                squares: squares,
-            }]),
-            stepNumber: history.length,
-            xIsNext: !this.state.xIsNext,
-        });
-    }
-
-    jumpTo(step: number) {
-        this.setState({
-            stepNumber: step,
-            xIsNext: (step % 2) === 0,
-        });
-    }
-
+class Game extends React.Component<GameProps, {}> {
     render() {
-        const history = this.state.history;
-        const current = history[this.state.stepNumber];
+        const history = this.props.history;
+        const current = history[this.props.stepNumber];
         const winner = calculateWinner(current.squares);
 
         const moves = history.map((step, move) => {
@@ -108,7 +71,7 @@ export class Game extends React.Component<RouteComponentProps<{}>, IGameStates> 
                 'Go to game start';
             return (
                 <li key={move}>
-                    <button onClick={() => this.jumpTo(move)}>{desc}</button>
+                    <button onClick={() => this.props.jumpTo(move)}>{desc}</button>
                 </li>
             );
         });
@@ -117,7 +80,7 @@ export class Game extends React.Component<RouteComponentProps<{}>, IGameStates> 
         if (winner) {
             status = 'Winner: ' + winner;
         } else {
-            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+            status = 'Next player: ' + (this.props.xIsNext ? 'X' : 'O');
         }
 
         return (
@@ -125,7 +88,7 @@ export class Game extends React.Component<RouteComponentProps<{}>, IGameStates> 
                 <div className="game-board">
                     <Board
                         squares={current.squares}
-                        onClick={(i) => this.handleClick(i)}
+                        onClick={(i) => this.props.clickSquare(i)}
                     />
                 </div>
                 <div className="game-info">
@@ -134,6 +97,8 @@ export class Game extends React.Component<RouteComponentProps<{}>, IGameStates> 
                 </div>
             </div>
         );
+
+        //return <div className="game"/>
     }
 }
 
@@ -156,3 +121,9 @@ function calculateWinner(squares: string[]): string {
     }
     return '';
 }
+
+// Wire up the React component to the Redux store
+export default connect(
+    (state: ApplicationState) => state.game, // Selects which state properties are merged into the component's props
+    GameStore.actionCreators                 // Selects which action creators are merged into the component's props
+)(Game) as typeof Game;
