@@ -54,13 +54,13 @@ interface ISquares {
     squares: string[];
 }
 
-interface IGameProps {
+interface IGameStates {
     history: ISquares[],
     xIsNext: boolean,
     stepNumber: number,
 }
 
-export class Game extends React.Component<RouteComponentProps<{}>, IGameProps> {
+export class Game extends React.Component<RouteComponentProps<{}>, IGameStates> {
     constructor(props: RouteComponentProps<{}>) {
         super(props);
         this.state = {
