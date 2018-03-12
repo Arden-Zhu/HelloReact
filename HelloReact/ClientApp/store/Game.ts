@@ -7,7 +7,7 @@ interface ISquares {
 }
 
 export interface IGameStates {
-    history: { squares: string[] }[],
+    history: ISquares[],
     xIsNext: boolean,
     stepNumber: number,
 }
@@ -37,7 +37,7 @@ export const actionCreators = {
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
-function calculateWinner(squares: string[]): string {
+export const calculateWinner = function (squares: string[]): string {
     const lines = [
         [0, 1, 2],
         [3, 4, 5],
