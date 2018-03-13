@@ -6,8 +6,8 @@ import * as GameStore from '../store/Game';
 
 
 interface ISquareProps {
-    location: number;
     value: string;
+    onClick: () => void;
 }
 
 type SquareProps = ISquareProps & typeof GameStore.actionCreators;
@@ -15,7 +15,7 @@ type SquareProps = ISquareProps & typeof GameStore.actionCreators;
 class Square extends React.Component<SquareProps, {}> {
     render() {
         return (
-            <button className="square" onClick={() => this.props.clickSquare(this.props.location)}>
+            <button className="square" onClick={() => this.props.onClick()}>
                 {this.props.value}
             </button>
         );
@@ -36,9 +36,17 @@ let SquareContainer = connect(
             value: squares[ownProp.location],
         }
     },
-    GameStore.actionCreators,
-    (state: ISquareProps, undefined, ownProps: SquareContainerProps) => {
-        return state
+    //GameStore.actionCreators,
+    (dispatch, ownProps: SquareContainerProps) => {
+        return {
+            onClick: () => { dispatch(GameStore.actionCreators.clickSquare(ownProps.location)) }
+        }
+    },
+    (state, dispatchProps, ownProps) => {
+        return {
+            value: state.value,
+            onClick: dispatchProps.onClick,
+        }
     }
 )(Square);
 
