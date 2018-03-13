@@ -36,7 +36,10 @@ let SquareContainer = connect(
             value: squares[ownProp.location],
         }
     },
-    GameStore.actionCreators                 // Selects which action creators are merged into the component's props
+    GameStore.actionCreators,
+    (state: ISquareProps, undefined, ownProps: SquareContainerProps) => {
+        return state
+    }
 )(Square);
 
 class Board extends React.Component<{}, {}> {
