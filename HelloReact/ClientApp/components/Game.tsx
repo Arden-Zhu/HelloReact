@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { ApplicationState } from '../store';
 import * as GameStore from '../store/Game';
 
-
 interface ISquareProps {
     value: string;
     onClick: () => void;
@@ -26,12 +25,9 @@ interface ISquareContainerProps {
 
 let SquareContainer = connect(
     (state: ApplicationState, ownProps: ISquareContainerProps) => {
-        const history = state.game.history;
-        const current = history[state.game.stepNumber];
-        const squares = current.squares;
         return {
             location: ownProps.location,
-            value: squares[ownProps.location],
+            value: GameStore.getCurrent(state.game).squares[ownProps.location],
         }
     },
     (dispatch, ownProps: ISquareContainerProps) => {
@@ -126,3 +122,6 @@ export default connect(
     (state: ApplicationState) => state.game, // Selects which state properties are merged into the component's props
     GameStore.actionCreators                 // Selects which action creators are merged into the component's props
 )(Game) as typeof Game;
+
+// ToPlay : Move some props from Game to GameContainer?
+// ToPlay : The practises on React Game

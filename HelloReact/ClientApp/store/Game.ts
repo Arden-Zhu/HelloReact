@@ -57,6 +57,12 @@ export const calculateWinner = function (squares: string[]): string {
     return '';
 }
 
+export const getCurrent = function (state: IGameStates): ISquares {
+    const history = state.history;
+    const current = history[state.stepNumber];
+    return current;
+}
+
 const unloadedState: IGameStates = {
     history: [{
         squares: Array(9).fill(null),
