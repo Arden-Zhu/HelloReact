@@ -10,9 +10,7 @@ interface ISquareProps {
     onClick: () => void;
 }
 
-type SquareProps = ISquareProps & typeof GameStore.actionCreators;
-
-class Square extends React.Component<SquareProps, {}> {
+class Square extends React.Component<ISquareProps, {}> {
     render() {
         return (
             <button className="square" onClick={() => this.props.onClick()}>
@@ -22,29 +20,28 @@ class Square extends React.Component<SquareProps, {}> {
     }
 }
 
-interface SquareContainerProps {
+interface ISquareContainerProps {
     location: number;
 }
 
 let SquareContainer = connect(
-    (state: ApplicationState, ownProp: SquareContainerProps) => {
+    (state: ApplicationState, ownProps: ISquareContainerProps) => {
         const history = state.game.history;
         const current = history[state.game.stepNumber];
         const squares = current.squares;
         return {
-            location: ownProp.location,
-            value: squares[ownProp.location],
+            location: ownProps.location,
+            value: squares[ownProps.location],
         }
     },
-    //GameStore.actionCreators,
-    (dispatch, ownProps: SquareContainerProps) => {
+    (dispatch, ownProps: ISquareContainerProps) => {
         return {
             onClick: () => { dispatch(GameStore.actionCreators.clickSquare(ownProps.location)) }
         }
     },
-    (state, dispatchProps, ownProps) => {
+    (stateProps, dispatchProps, ownProps) => {
         return {
-            value: state.value,
+            value: stateProps.value,
             onClick: dispatchProps.onClick,
         }
     }
