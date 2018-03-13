@@ -5,28 +5,41 @@ import { ApplicationState } from '../store';
 import * as GameStore from '../store/Game';
 
 
-interface SquareProps {
+interface ISquareProps {
+    location: number;
     value: string;
-    onClick: () => void;
 }
 
-function Square(props: SquareProps) {
-    return (
-        <button className="square" onClick={props.onClick}>
-            {props.value}
-        </button>
-    );
+type SquareProps = ISquareProps & typeof GameStore.actionCreators;
+
+class Square extends React.Component<SquareProps, {}> {
+    render() {
+        return (
+            <button className="square" onClick={() => this.props.clickSquare(this.props.location)}>
+                {this.props.value}
+            </button>
+        );
+    }
 }
+
+let SquareContainer = connect(
+    (state: ApplicationState, ownProp: ISquareProps) => {
+        return {
+            location: ownProp.location,
+            value: ownProp.value,
+        }
+    },
+    GameStore.actionCreators                 // Selects which action creators are merged into the component's props
+)(Square);
 
 interface IBoardProps {
     squares: string[],
-    onClick: (i: number) => void
 }
 
 class Board extends React.Component<IBoardProps, {}> {
     renderSquare(i: number) {
-        return <Square
-            onClick = {() => this.props.onClick(i)}
+        return <SquareContainer
+            location={i}
             value={this.props.squares[i]}
         />;
     }
@@ -88,7 +101,6 @@ class Game extends React.Component<GameProps, {}> {
                 <div className="game-board">
                     <Board
                         squares={current.squares}
-                        onClick={(i) => this.props.clickSquare(i)}
                     />
                 </div>
                 <div className="game-info">
