@@ -22,25 +22,27 @@ class Square extends React.Component<SquareProps, {}> {
     }
 }
 
+interface SquareContainerProps {
+    location: number;
+}
+
 let SquareContainer = connect(
-    (state: ApplicationState, ownProp: ISquareProps) => {
+    (state: ApplicationState, ownProp: SquareContainerProps) => {
+        const history = state.game.history;
+        const current = history[state.game.stepNumber];
+        const squares = current.squares;
         return {
             location: ownProp.location,
-            value: ownProp.value,
+            value: squares[ownProp.location],
         }
     },
     GameStore.actionCreators                 // Selects which action creators are merged into the component's props
 )(Square);
 
-interface IBoardProps {
-    squares: string[],
-}
-
-class Board extends React.Component<IBoardProps, {}> {
+class Board extends React.Component<{}, {}> {
     renderSquare(i: number) {
         return <SquareContainer
             location={i}
-            value={this.props.squares[i]}
         />;
     }
 
@@ -100,7 +102,6 @@ class Game extends React.Component<GameProps, {}> {
             <div className="game">
                 <div className="game-board">
                     <Board
-                        squares={current.squares}
                     />
                 </div>
                 <div className="game-info">
