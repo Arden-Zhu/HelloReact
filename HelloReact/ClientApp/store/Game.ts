@@ -71,7 +71,7 @@ const unloadedState: IGameStates = {
     stepNumber: 0,
 };
 
-export const reducer: Reducer<IGameStates> = (state: IGameStates, inComingAction: Action) => {
+export const reducer: Reducer<IGameStates> = (state: IGameStates = unloadedState, inComingAction: Action) => {
     const action = inComingAction as KnownAction;
     switch (action.type) {
         case CLICK_SQUARE: {
@@ -104,5 +104,5 @@ export const reducer: Reducer<IGameStates> = (state: IGameStates, inComingAction
 
     // For unrecognized actions (or in cases where actions have no effect), must return the existing state
     //  (or default initial state if none was supplied)
-    return state || unloadedState;
+    return state;
 };
