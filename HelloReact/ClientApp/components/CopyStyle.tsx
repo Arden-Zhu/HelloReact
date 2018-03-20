@@ -6,27 +6,10 @@ import { SimpleSelect, MultiSelect } from 'react-selectize';
 
 type CopyStyleProps = RouteComponentProps<{}>;
 export class CopyStyle extends React.Component<CopyStyleProps, {}> {
-    testValue(value: any) {
-        alert(value);
-        console.log(value);
-    }
     public render() {
         return <div>
             <h1>Copy Style</h1>
             <CopyStyleFilter />
-            <SimpleSelect placeholder="Select a fruit" onValueChange={value => this.testValue(value.value)}>
-                <option value="apple">apple</option>
-                <option value="mango">mango</option>
-                <option value="orange">orange</option>
-                <option value="banana">banana</option>
-            </SimpleSelect>
-            <MultiSelect
-                placeholder="Select fruits"
-                options={["apple", "mango", "orange", "banana"].map(
-                    fruit => ({ label: fruit, value: fruit })
-                )}
-                onValuesChange={value => alert(value)}
-            />
         </div>
     }
 }
@@ -36,22 +19,34 @@ class CopyStyleFilter extends React.Component<{}, {}> {
         return <div>
             <form>
                 <label>Original Season
-                    <select>
-                        <option>PF18</option>
-                        <option>FA18</option>
-                    </select>
+                    <SimpleSelect placeholder="Select a season" onValueChange={value => null}>
+                        <option value="PF18">PF18</option>
+                        <option value="FA18">FA18</option>
+                    </SimpleSelect>
                 </label>
                 <label>Fabric#
                     <input name="fabric" placeholder="*0231" />
                 </label>
                 <label>Body
-                    <select className="mdb-select colorful-select dropdown-primary" multiple>
-                        <option>Blouses</option>
-                        <option>Coats</option>
-                        <option>abc</option>
-                    </select>
+                    <MultiSelect
+                        placeholder="Select bodies"
+                        options={["Blouses", "Coats", "Pants"].map(
+                            item => ({ label: item, value: item })
+                        )}
+                        onValuesChange={value => null}
+                    />
                 </label>
-                <button className="btn-save btn btn-primary btn-sm">Save</button>
+                <label>Fit
+                    <SimpleSelect placeholder="(Optional)Select a fit" onValueChange={value => null}>
+                        <option value="M">Missy</option>
+                        <option value="W">Plus</option>
+                        <option value="P">Petite</option>
+                    </SimpleSelect>
+                </label>
+                <label>Style
+                    <input placeholder="(Optional)Style#" />
+                </label>
+                <button className="btn-save btn btn-primary btn-sm">Query</button>
             </form>
         </div>
     }
