@@ -5,7 +5,8 @@ import Home from './components/Home';
 import FetchData from './components/FetchData';
 import Counter from './components/Counter';
 import { Clickable } from './components/Clickable';
-import Game  from './components/Game';
+import Game from './components/Game';
+import { CopyStyle } from './components/CopyStyle'
 
 export const routes = <Layout>
     <Route exact path='/' component={ Home } />
@@ -13,4 +14,5 @@ export const routes = <Layout>
     <Route path='/fetchdata/:startDateIndex?' component={FetchData} />
     <Route path='/clickable' component={Clickable} />
     <Route path='/game' component={Game} />
+    <Route path='/CopyStyle' component={CopyStyle} />
 </Layout>;

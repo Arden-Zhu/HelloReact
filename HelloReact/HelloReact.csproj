@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <None Remove="ClientApp\components\Clickable.tsx" />
+    <None Remove="ClientApp\components\CopyStyle.tsx" />
     <None Remove="ClientApp\components\Game.tsx" />
     <None Remove="ClientApp\components\NameForm.tsx" />
     <None Remove="ClientApp\store\Game.ts" />
@@ -31,6 +32,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\components\Clickable.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\CopyStyle.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Game.tsx" />
     <TypeScriptCompile Include="ClientApp\components\NameForm.tsx" />
     <TypeScriptCompile Include="ClientApp\store\Game.ts" />
