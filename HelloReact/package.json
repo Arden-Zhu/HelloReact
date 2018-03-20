@@ -44,5 +44,10 @@
     "webpack": "2.5.1",
     "webpack-hot-middleware": "2.18.2",
     "webpack-merge": "4.1.0"
+  },
+  "dependencies": {
+    "react-dom-factories": "^1.0.2",
+    "react-selectize": "^3.0.1",
+    "react-transition-group": "^1.2.1"
   }
 }
