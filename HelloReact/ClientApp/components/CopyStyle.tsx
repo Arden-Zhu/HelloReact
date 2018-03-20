@@ -16,7 +16,24 @@ export class CopyStyle extends React.Component<CopyStyleProps, {}> {
 class CopyStyleFilter extends React.Component<{}, {}> {
     public render() {
         return <div>
-            Filters
+            <form>
+                <label>Original Season
+                    <select>
+                        <option>PF18</option>
+                        <option>FA18</option>
+                    </select>
+                </label>
+                <label>Fabric#
+                    <input name="fabric" placeholder="*0231" />
+                </label>
+                <label>Body
+                    <select multiple>
+                        <option>Blouses</option>
+                        <option>Coats</option>
+                        <option>abc</option>
+                    </select>
+                </label>
+            </form>
         </div>
     }
 }
