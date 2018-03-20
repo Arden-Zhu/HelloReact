@@ -8,6 +8,15 @@ export class CopyStyle extends React.Component<CopyStyleProps, {}> {
     public render() {
         return <div>
             <h1>Copy Style</h1>
+            <CopyStyleFilter/>
+        </div>
+    }
+}
+
+class CopyStyleFilter extends React.Component<{}, {}> {
+    public render() {
+        return <div>
+            Filters
         </div>
     }
 }
