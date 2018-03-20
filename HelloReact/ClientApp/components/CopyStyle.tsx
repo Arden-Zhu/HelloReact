@@ -27,12 +27,13 @@ class CopyStyleFilter extends React.Component<{}, {}> {
                     <input name="fabric" placeholder="*0231" />
                 </label>
                 <label>Body
-                    <select multiple>
+                    <select className="mdb-select colorful-select dropdown-primary" multiple>
                         <option>Blouses</option>
                         <option>Coats</option>
                         <option>abc</option>
                     </select>
                 </label>
+                <button className="btn-save btn btn-primary btn-sm">Save</button>
             </form>
         </div>
     }
