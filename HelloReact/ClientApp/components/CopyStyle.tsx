@@ -129,8 +129,8 @@ class CopyStyleFilter extends React.Component<{}, {}> {
             <form>
                 <label>Original Season
                     <SimpleSelect placeholder="Select a season" onValueChange={value => null}>
-                        <option value="PF18">PF18</option>
-                        <option value="FA18">FA18</option>
+                        <option value="454393">FA18</option>
+                        <option value="454396">PF18</option>
                     </SimpleSelect>
                 </label>
                 <label>Fabric#
