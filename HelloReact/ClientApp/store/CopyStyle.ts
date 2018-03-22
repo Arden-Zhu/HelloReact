@@ -44,7 +44,7 @@ export const actionCreators = {
     requestStyles: (seasonId: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
         // Only load data if it's something we don't already have (and are not already loading)
         if (seasonId !== getState().copyStyle.styleFilters.seasonId) {
-            let fetchTask = fetch(`api/Style?seasonId=${seasonId}`)
+            let fetchTask = fetch(`api/Style/Styles?seasonId=${seasonId}`)
                 .then(response => response.json() as Promise<string[]>)
                 .then(data => {
                     dispatch({ type: RECEIVE_STYLES, styles: data });
