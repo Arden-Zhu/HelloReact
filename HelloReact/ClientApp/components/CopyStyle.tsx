@@ -3,6 +3,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../store';
 import { SimpleSelect, MultiSelect } from 'react-selectize';
+import * as CopyStyleStore from '../store/CopyStyle';
 
 type CopyStyleProps = RouteComponentProps<{}>;
 export class CopyStyle extends React.Component<CopyStyleProps, {}> {
@@ -28,15 +29,6 @@ class CopyStyleCommands extends React.Component<{}, {}> {
             <button className="btn btn-primary btn-sm">Submit</button>
             <button className="btn btn-primary btn-sm">Change</button>
             <button className="btn btn-primary btn-sm">Change</button>
-        </div>
-    }
-}
-
-class CopyStyleTable extends React.Component<{}, {}> {
-    render() {
-        return <div className="container">
-        <CopyStyleTableHeader />
-        <CopyStyleTableStyles />
         </div>
     }
 }
@@ -78,39 +70,63 @@ class CopyStyleTableHeader extends React.Component<{}, {}> {
     }
 }
 
-class CopyStyleTableStyles extends React.Component<{}, {}> {
+type ICopyStyleTableStylesProps = { styles: CopyStyleStore.Style[] }
+    & typeof CopyStyleStore.actionCreators;
+
+class CopyStyleTableStyles extends React.Component< ICopyStyleTableStylesProps, {}> {
     render() {
-        return <div className="row">
-            <span className="col-md-1"><input type="checkbox" /></span>
-            <span className="col-md-2">WV372E-KV15</span>
-            <span className="col-md-1">
-                <ul>
-                    <li>Color1</li>
-                    <li>Color2</li>
-                </ul>
-                <button className="btn btn-primary btn-sm">Change</button>
-            </span>
-            <span className="col-md-1">
-                <button className="btn btn-primary btn-sm">Change</button>
-            </span>
-            <span className="col-md-1">
-                <button className="btn btn-primary btn-sm">Change</button>
-            </span>
-            <span className="col-md-1">
-                <button className="btn btn-primary btn-sm">Change</button>
-            </span>
-            <span className="col-md-1">
-                <button className="btn btn-primary btn-sm">Change</button>
-            </span>
-            <span className="col-md-1">
-                <button className="btn btn-primary btn-sm">Change</button>
-            </span>
-            <span className="col-md-1">
-                <button className="btn btn-primary btn-sm">Change</button>
-            </span>
-            <span className="col-md-1">
-                
-            </span>
+        return <div>
+            {this.props.styles.map(style =>
+                <div className="row">
+                    <span className="col-md-1"><input type="checkbox" /></span>
+                    <span className="col-md-2">{style.style}</span>
+                    <span className="col-md-1">
+                        <ul>
+                            <li>Color1</li>
+                            <li>Color2</li>
+                        </ul>
+                        <button className="btn btn-primary btn-sm">Change</button>
+                    </span>
+                    <span className="col-md-1">
+                        <button className="btn btn-primary btn-sm">Change</button>
+                    </span>
+                    <span className="col-md-1">
+                        <button className="btn btn-primary btn-sm">Change</button>
+                    </span>
+                    <span className="col-md-1">
+                        <button className="btn btn-primary btn-sm">Change</button>
+                    </span>
+                    <span className="col-md-1">
+                        <button className="btn btn-primary btn-sm">Change</button>
+                    </span>
+                    <span className="col-md-1">
+                        <button className="btn btn-primary btn-sm">Change</button>
+                    </span>
+                    <span className="col-md-1">
+                        <button className="btn btn-primary btn-sm">Change</button>
+                    </span>
+                    <span className="col-md-1">
+
+                    </span>
+                </div>
+            )}
+            </div>
+    }
+}
+
+let CopyStyleTableStylesContainer = connect(
+    (state: ApplicationState) => {
+        return { styles: state.copyStyle.styles }
+    },
+    CopyStyleStore.actionCreators 
+)(CopyStyleTableStyles);
+
+
+class CopyStyleTable extends React.Component<{}, {}> {
+    render() {
+        return <div className="container">
+            <CopyStyleTableHeader />
+            <CopyStyleTableStylesContainer />
         </div>
     }
 }

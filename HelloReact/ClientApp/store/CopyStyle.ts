@@ -29,7 +29,7 @@ interface RequestStylesAction {
 const RECEIVE_STYLES = 'RECEIVE_STYLES'
 interface ReceiveStylesAction {
     type: 'RECEIVE_STYLES';
-    styles: string[];
+    styles: Style[];
 }
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
@@ -45,7 +45,7 @@ export const actionCreators = {
         // Only load data if it's something we don't already have (and are not already loading)
         if (seasonId !== getState().copyStyle.styleFilters.seasonId) {
             let fetchTask = fetch(`api/Style/Styles?seasonId=${seasonId}`)
-                .then(response => response.json() as Promise<string[]>)
+                .then(response => response.json() as Promise<Style[]>)
                 .then(data => {
                     dispatch({ type: RECEIVE_STYLES, styles: data });
                 });
@@ -64,7 +64,7 @@ const unloadedState: CopyStyleState = {
     styleFilters: {
         seasonId: 0,
     },
-    styles: [],
+    styles: [{ style: 'style1' }, { style: 'style2' }],
 };
 
 export const reducer: Reducer<CopyStyleState> = (state: CopyStyleState, incomingAction: Action) => {
@@ -85,11 +85,7 @@ export const reducer: Reducer<CopyStyleState> = (state: CopyStyleState, incoming
             return {
                     ...state,
                     isLoading: false,
-                    styles: action.styles.map((value, index) => {
-                        return {
-                            style: value
-                        };
-                    }),
+                    styles: action.styles,
                 };
             //}
             //break;
