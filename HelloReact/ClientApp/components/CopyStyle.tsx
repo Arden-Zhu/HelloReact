@@ -34,52 +34,84 @@ class CopyStyleCommands extends React.Component<{}, {}> {
 
 class CopyStyleTable extends React.Component<{}, {}> {
     render() {
-        return <table>
-                <CopyStyleTableHeader />
-                <CopyStyleTableStyles />
-            </table>
+        return <div className="container">
+        <CopyStyleTableHeader />
+        <CopyStyleTableStyles />
+        </div>
     }
 }
 
 class CopyStyleTableHeader extends React.Component<{}, {}> {
     render() {
-        return <thead>
-            <tr>
-                <th>
-                    <input type="checkbox" />
-                </th>
-                <th>Style</th>
-                <th>A</th>
-                <th>B</th>
-                <th>C</th>
-                <th>Result</th>
-            </tr>
-        </thead>
+        return <div className="row">
+            <span className="col-md-1">
+                <input type="checkbox" />
+            </span>
+            <span className="col-md-2">
+                Style
+            </span>
+            <span className="col-md-1">
+                A
+            </span>
+            <span className="col-md-1">
+                B
+            </span>
+            <span className="col-md-1">
+                C
+            </span>
+            <span className="col-md-1">
+                D
+            </span>
+            <span className="col-md-1">
+                L
+            </span>
+            <span className="col-md-1">
+                R
+            </span>
+            <span className="col-md-1">
+                X
+            </span>
+            <span className="col-md-1">
+                Result
+            </span>
+        </div>
     }
 }
 
 class CopyStyleTableStyles extends React.Component<{}, {}> {
     render() {
-        return <tr>
-            <td><input type="checkbox" /></td>
-            <td>WV372E-KV15</td>
-            <td>
+        return <div className="row">
+            <span className="col-md-1"><input type="checkbox" /></span>
+            <span className="col-md-2">WV372E-KV15</span>
+            <span className="col-md-1">
                 <ul>
                     <li>Color1</li>
                     <li>Color2</li>
                 </ul>
                 <button className="btn btn-primary btn-sm">Change</button>
-            </td>
-            <td>
+            </span>
+            <span className="col-md-1">
                 <button className="btn btn-primary btn-sm">Change</button>
-            </td>
-            <td>
+            </span>
+            <span className="col-md-1">
                 <button className="btn btn-primary btn-sm">Change</button>
-            </td>
-            <td>
+            </span>
+            <span className="col-md-1">
+                <button className="btn btn-primary btn-sm">Change</button>
+            </span>
+            <span className="col-md-1">
+                <button className="btn btn-primary btn-sm">Change</button>
+            </span>
+            <span className="col-md-1">
+                <button className="btn btn-primary btn-sm">Change</button>
+            </span>
+            <span className="col-md-1">
+                <button className="btn btn-primary btn-sm">Change</button>
+            </span>
+            <span className="col-md-1">
                 
-            </td>
-        </tr>
+            </span>
+        </div>
     }
 }
 
