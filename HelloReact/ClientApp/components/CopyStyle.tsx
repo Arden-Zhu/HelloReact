@@ -10,7 +10,7 @@ export class CopyStyle extends React.Component<CopyStyleProps, {}> {
     public render() {
         return <div>
             <h1>Copy Style</h1>
-            <CopyStyleFilter />
+            <CopyStyleFilterContainer />
             <CopyStyleCommands/>
             <CopyStyleTable />
         </div>
@@ -77,7 +77,7 @@ class CopyStyleTableStyles extends React.Component< ICopyStyleTableStylesProps, 
     render() {
         return <div>
             {this.props.styles.map(style =>
-                <div className="row">
+                <div key={style.style} className="row">
                     <span className="col-md-1"><input type="checkbox" /></span>
                     <span className="col-md-2">{style.style}</span>
                     <span className="col-md-1">
@@ -138,13 +138,22 @@ class temp extends React.Component<{}, {}> {
     }
 }
 
+interface ICopyStyleFilterState {
+    seasonId: number;
+}
 
-class CopyStyleFilter extends React.Component<{}, {}> {
+type ICopyStyleFilterProps = typeof CopyStyleStore.actionCreators;
+
+class CopyStyleFilter extends React.Component<ICopyStyleFilterProps, ICopyStyleFilterState> {
+    submit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        this.props.requestStyles(this.state.seasonId);
+    }
     public render() {
         return <div>
-            <form>
+            <form onSubmit={(e) => this.submit(e)} >
                 <label>Original Season
-                    <SimpleSelect placeholder="Select a season" onValueChange={value => null}>
+                    <SimpleSelect placeholder="Select a season" onValueChange={value => this.setState({ seasonId: value.value }) } >
                         <option value="454393">FA18</option>
                         <option value="454396">PF18</option>
                     </SimpleSelect>
@@ -176,3 +185,10 @@ class CopyStyleFilter extends React.Component<{}, {}> {
         </div>
     }
 }
+
+let CopyStyleFilterContainer = connect(
+    (state: ApplicationState) => {
+        return { }
+    },
+    CopyStyleStore.actionCreators
+)(CopyStyleFilter);
