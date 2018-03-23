@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { ApplicationState } from '../store';
 import { SimpleSelect, MultiSelect } from 'react-selectize';
 import * as CopyStyleStore from '../store/CopyStyle';
-import { Season } from '../store/Season'
+import * as SeasonStore from '../store/Season'
 
 type CopyStyleProps = RouteComponentProps<{}>;
 export class CopyStyle extends React.Component<CopyStyleProps, {}> {
@@ -143,8 +143,9 @@ interface ICopyStyleFilterState {
     seasonId: number;
 }
 
-type ICopyStyleFilterProps = { seasons : Season[] } &
-    typeof CopyStyleStore.actionCreators;
+type ICopyStyleFilterProps = { seasons: SeasonStore.Season[] } &
+    typeof CopyStyleStore.actionCreators &
+    typeof SeasonStore.actionCreators;
 
 class CopyStyleFilter extends React.Component<ICopyStyleFilterProps, ICopyStyleFilterState> {
     submit(e: React.FormEvent<HTMLFormElement>) {
@@ -160,6 +161,7 @@ class CopyStyleFilter extends React.Component<ICopyStyleFilterProps, ICopyStyleF
                         <option value="454396">PF18</option>
                     </SimpleSelect>
                 </label>
+                <button className="btn btn-sm" onClick={() => this.props.requestSeasons()}>Fill Season</button>
                 <label>Original Season
                     <SimpleSelect
                         placeholder="Select a season"
@@ -199,5 +201,8 @@ let CopyStyleFilterContainer = connect(
     (state: ApplicationState) => {
         return { seasons: state.season.seasons };
     },
-    CopyStyleStore.actionCreators
+    {
+        ...CopyStyleStore.actionCreators,
+        ...SeasonStore.actionCreators
+    }
 )(CopyStyleFilter);
