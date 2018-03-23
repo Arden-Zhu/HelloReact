@@ -10,6 +10,12 @@ export interface CopyStyleState {
         seasonId: number;
     }
     styles: Style[];
+    seasons: Season[];
+}
+
+export interface Season {
+    value: number;
+    label: string;
 }
 
 export interface Style {
@@ -65,6 +71,10 @@ const unloadedState: CopyStyleState = {
         seasonId: 0,
     },
     styles: [{ style: 'style1' }, { style: 'style2' }],
+    seasons: [
+        { value: 1, label: "s1" },
+        { value: 2, label: "s2" },
+    ]
 };
 
 export const reducer: Reducer<CopyStyleState> = (state: CopyStyleState, incomingAction: Action) => {

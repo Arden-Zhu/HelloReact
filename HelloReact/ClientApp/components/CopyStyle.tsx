@@ -142,7 +142,8 @@ interface ICopyStyleFilterState {
     seasonId: number;
 }
 
-type ICopyStyleFilterProps = typeof CopyStyleStore.actionCreators;
+type ICopyStyleFilterProps = { seasons : CopyStyleStore.Season[] } &
+    typeof CopyStyleStore.actionCreators;
 
 class CopyStyleFilter extends React.Component<ICopyStyleFilterProps, ICopyStyleFilterState> {
     submit(e: React.FormEvent<HTMLFormElement>) {
@@ -156,6 +157,13 @@ class CopyStyleFilter extends React.Component<ICopyStyleFilterProps, ICopyStyleF
                     <SimpleSelect placeholder="Select a season" onValueChange={value => this.setState({ seasonId: value.value }) } >
                         <option value="454393">FA18</option>
                         <option value="454396">PF18</option>
+                    </SimpleSelect>
+                </label>
+                <label>Original Season
+                    <SimpleSelect
+                        placeholder="Select a season"
+                        options={this.props.seasons}
+                        onValueChange={value => this.setState({ seasonId: value.value })} >
                     </SimpleSelect>
                 </label>
                 <label>Fabric#
@@ -188,7 +196,7 @@ class CopyStyleFilter extends React.Component<ICopyStyleFilterProps, ICopyStyleF
 
 let CopyStyleFilterContainer = connect(
     (state: ApplicationState) => {
-        return { }
+        return { seasons: state.copyStyle.seasons };
     },
     CopyStyleStore.actionCreators
 )(CopyStyleFilter);
