@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { ApplicationState } from '../store';
 import { SimpleSelect, MultiSelect } from 'react-selectize';
 import * as CopyStyleStore from '../store/CopyStyle';
+import { Season } from '../store/Season'
 
 type CopyStyleProps = RouteComponentProps<{}>;
 export class CopyStyle extends React.Component<CopyStyleProps, {}> {
@@ -142,7 +143,7 @@ interface ICopyStyleFilterState {
     seasonId: number;
 }
 
-type ICopyStyleFilterProps = { seasons : CopyStyleStore.Season[] } &
+type ICopyStyleFilterProps = { seasons : Season[] } &
     typeof CopyStyleStore.actionCreators;
 
 class CopyStyleFilter extends React.Component<ICopyStyleFilterProps, ICopyStyleFilterState> {
@@ -196,7 +197,7 @@ class CopyStyleFilter extends React.Component<ICopyStyleFilterProps, ICopyStyleF
 
 let CopyStyleFilterContainer = connect(
     (state: ApplicationState) => {
-        return { seasons: state.copyStyle.seasons };
+        return { seasons: state.season.seasons };
     },
     CopyStyleStore.actionCreators
 )(CopyStyleFilter);

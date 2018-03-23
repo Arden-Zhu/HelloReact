@@ -28,6 +28,7 @@
     <None Remove="ClientApp\components\NameForm.tsx" />
     <None Remove="ClientApp\store\CopyStyle.ts" />
     <None Remove="ClientApp\store\Game.ts" />
+    <None Remove="ClientApp\store\Season.ts" />
     <None Remove="ClientApp\test\react.app.tests.tsx" />
   </ItemGroup>
 
@@ -38,6 +39,7 @@
     <TypeScriptCompile Include="ClientApp\components\NameForm.tsx" />
     <TypeScriptCompile Include="ClientApp\store\CopyStyle.ts" />
     <TypeScriptCompile Include="ClientApp\store\Game.ts" />
+    <TypeScriptCompile Include="ClientApp\store\Season.ts" />
     <TypeScriptCompile Include="ClientApp\test\react.app.tests.tsx" />
   </ItemGroup>
 
