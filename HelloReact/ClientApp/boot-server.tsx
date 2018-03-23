@@ -7,6 +7,7 @@ import { createMemoryHistory } from 'history';
 import { createServerRenderer, RenderResult } from 'aspnet-prerendering';
 import { routes } from './routes';
 import configureStore from './configureStore';
+import * as SeasonStore from './store/Season';
 
 export default createServerRenderer(params => {
     return new Promise<RenderResult>((resolve, reject) => {
@@ -33,6 +34,7 @@ export default createServerRenderer(params => {
             return;
         }
         
+        store.dispatch(SeasonStore.actionCreators.requestSeasons());
         // Once any async tasks are done, we can perform the final render
         // We also send the redux store state, so the client can continue execution where the server left off
         params.domainTasks.then(() => {

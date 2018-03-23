@@ -39,6 +39,9 @@ export const actionCreators = {
             addTask(fetchTask); // Ensure server-side prerendering waits for this to complete
             dispatch({ type: REQUEST_SEASONS});
         }
+    },
+    init: (seasons: Season[]) => {
+        return { type: RECEIVE_SEASONS, seasons: seasons };
     }
 };
 
