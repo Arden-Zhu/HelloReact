@@ -171,7 +171,10 @@ class CopyStyleFilter extends React.Component<ICopyStyleFilterProps, ICopyStyleF
                     </SimpleSelect>
                 </label>
                 <label>Season Comp
-                    <Season />
+                    <Season onValueChange={value => alert(value.label)} />
+                </label>
+                <label>Season Comp 2
+                    <Season/>
                 </label>
                 <label>Fabric#
                     <input name="fabric" placeholder="*0231" />
