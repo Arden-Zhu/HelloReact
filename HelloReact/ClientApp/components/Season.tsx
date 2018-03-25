@@ -10,7 +10,7 @@ import { Dispatch } from 'redux';
 //    seasons: SeasonStore.Season[];
 //}
 
-type SeasonProps = SeasonStore.SeasonState & DispatchProp<any>;
+type SeasonProps = SeasonStore.SeasonState & typeof SeasonStore.actionCreators;
 
 class Season extends React.Component<SeasonProps, {}> {
     render() {
@@ -27,5 +27,6 @@ class Season extends React.Component<SeasonProps, {}> {
 //)(FetchData) as typeof FetchData;
 
 export default connect(
-    (state: ApplicationState) => state.season
-)(Season) as typeof Season;
+    (state: ApplicationState) => state.season,
+    SeasonStore.actionCreators
+)(Season);

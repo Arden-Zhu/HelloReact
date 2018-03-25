@@ -5,6 +5,7 @@ import { ApplicationState } from '../store';
 import { SimpleSelect, MultiSelect } from 'react-selectize';
 import * as CopyStyleStore from '../store/CopyStyle';
 import * as SeasonStore from '../store/Season'
+import Season from './Season'
 
 type CopyStyleProps = RouteComponentProps<{}>;
 export class CopyStyle extends React.Component<CopyStyleProps, {}> {
@@ -168,6 +169,9 @@ class CopyStyleFilter extends React.Component<ICopyStyleFilterProps, ICopyStyleF
                         options={this.props.seasons}
                         onValueChange={value => this.setState({ seasonId: value.value })} >
                     </SimpleSelect>
+                </label>
+                <label>Season Comp
+                    <Season />
                 </label>
                 <label>Fabric#
                     <input name="fabric" placeholder="*0231" />
