@@ -6,12 +6,15 @@ import { SimpleSelect, MultiSelect, OptionValue } from 'react-selectize';
 import * as SeasonStore from '../store/Season'
 import { Dispatch } from 'redux';
 
-interface ISeasonProps {
+interface IStateProps {
     seasons: SeasonStore.Season[];
-    onValueChange: (value: OptionValue) => void;
 }
 
-type SeasonProps = ISeasonProps & DispatchProp<any>;
+interface IOwnProps {
+    onValueChange?: (value: OptionValue) => void;
+}
+
+type SeasonProps = IStateProps & IOwnProps  & DispatchProp<any>;
 
 class Season extends React.Component<SeasonProps, {}> {
     render() {
@@ -24,9 +27,8 @@ class Season extends React.Component<SeasonProps, {}> {
 }
 
 export default connect(
-    (state: ApplicationState, ownProps: { onValueChange?: (value: OptionValue) => void }) => (
+    (state: ApplicationState, ownProps: IOwnProps ) => (
         {
             seasons: state.season.seasons,
-            onValueChange : ownProps.onValueChange,
         })
 )(Season);
